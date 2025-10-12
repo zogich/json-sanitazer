@@ -3,13 +3,14 @@
 namespace common;
 
 /**
- * @template T of string|int
+ * @template T of string|int|array
  */
 interface SanitazerInterface
 {
     /**
-    * @return T
-    */
-    public function sanitaze(string $value): string| int;
+      * @param T $value
+      * @return T
+      */
+    public function sanitaze(string|array $value): string|int|array;
 
 }

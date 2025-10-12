@@ -10,7 +10,7 @@ final class IntegerSanitazer implements SanitazerInterface
     /**
     * @inheritDoc
     */
-    public function sanitaze(string $value): int
+    public function sanitaze(array|string $value): int
     {
         return intval(
             $value
