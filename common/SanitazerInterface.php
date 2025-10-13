@@ -11,5 +11,5 @@ interface SanitazerInterface
       * @param T $value
       * @return T
       */
-    public function sanitaze(string|array $value): string|int|array;
+    public function sanitaze(string|array $value): string|int|array|float;
 }
