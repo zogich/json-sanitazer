@@ -35,11 +35,10 @@ final class ArraySanitazer implements SanitazerInterface, CompositeInterface
             $iterator->next();
 
             if (!$iterator->valid()) {
-              break;
+                break;
             }
 
             $this->currentSanitazer = $iterator->current();
-
         }
 
         return $result;
