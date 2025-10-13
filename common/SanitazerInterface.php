@@ -12,5 +12,4 @@ interface SanitazerInterface
       * @return T
       */
     public function sanitaze(string|array $value): string|int|array;
-
 }
