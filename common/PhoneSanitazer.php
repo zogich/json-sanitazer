@@ -9,7 +9,7 @@ use Psr\Log\InvalidArgumentException;
 /** @implements SanitazerInterface<string> */
 final class PhoneSanitazer implements SanitazerInterface
 {
-    public function sanitaze(string|array $value): string
+    public function sanitaze(string|array|int $value): string
     {
         if (!$this->isValidFormat($value)) {
             throw new InvalidArgumentException('Номер телефона указан в некорректном формате');

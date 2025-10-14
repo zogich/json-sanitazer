@@ -7,7 +7,7 @@ namespace common;
 /** @implements SanitazerInterface<float> */
 final class FloatSanitazer implements SanitazerInterface
 {
-    public function sanitaze(array|string $value): float
+    public function sanitaze(array|string|int $value): float
     {
         return floatval($value);
     }

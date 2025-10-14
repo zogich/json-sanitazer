@@ -10,19 +10,18 @@ final class ArraySanitazer implements SanitazerInterface, CompositeInterface
     private array $sanitazers = [];
     private SanitazerInterface $currentSanitazer;
 
-
     /**
-    * @param SanitazerInterface[] $sanitazers
-    */
+     * @param SanitazerInterface[] $sanitazers
+     */
     public function __construct(array $sanitazers)
     {
         $this->sanitazers = $sanitazers;
     }
 
     /**
-       * {@inheritDoc}
-       */
-    public function sanitaze(array|string $value): array
+     * {@inheritDoc}
+     */
+    public function sanitaze(array|string|int $value): array
     {
         $result = [];
 

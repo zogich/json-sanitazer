@@ -8,13 +8,12 @@ namespace common;
 final class IntegerSanitazer implements SanitazerInterface
 {
     /**
-    * @inheritDoc
-    */
-    public function sanitaze(array|string $value): int
+     * {@inheritDoc}
+     */
+    public function sanitaze(array|string|int $value): int
     {
         return intval(
             $value
         );
     }
-
 }
