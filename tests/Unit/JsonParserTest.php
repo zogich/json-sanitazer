@@ -5,10 +5,10 @@ namespace Tests\Unit;
 require_once 'vendor/autoload.php';
 
 use Codeception\Test\Unit;
-use common\ArraySanitazer;
 use common\IntegerSanitazer;
 use common\JsonParser;
 use common\StringSanitazer;
+use common\StructSanitazer;
 
 class JsonParserTest extends Unit
 {
@@ -22,7 +22,7 @@ class JsonParserTest extends Unit
     public function testSanitazeString(): void
     {
         $this->sut->setParseScheme(
-            new ArraySanitazer(
+            new StructSanitazer(
                 [
                     new StringSanitazer(),
                 ]
@@ -47,7 +47,7 @@ class JsonParserTest extends Unit
     public function testSanitazeInt(): void
     {
         $this->sut->setParseScheme(
-            new ArraySanitazer(
+            new StructSanitazer(
                 [
                     new IntegerSanitazer(),
                 ]

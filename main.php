@@ -8,18 +8,19 @@ use common\IntegerSanitazer;
 use common\JsonParser;
 use common\PhoneSanitazer;
 use common\StringSanitazer;
+use common\StructSanitazer;
 
 $parser = new JsonParser();
 $parser->setParseScheme(
-    scheme: new ArraySanitazer(
+    scheme: new StructSanitazer(
         [
           new IntegerSanitazer(),
           new IntegerSanitazer(),
-          new ArraySanitazer(
+          new StructSanitazer(
               [
                 new IntegerSanitazer(),
                 new IntegerSanitazer(),
-                new ArraySanitazer(
+                new StructSanitazer(
                     [
                       new IntegerSanitazer(),
                       new StringSanitazer(),
@@ -36,6 +37,10 @@ $parser->setParseScheme(
     // 'yet_another_int_value' => SupportedTypes::INTEGER_VALUE,
     // 'array_value' => SupportedTypes::ARRAY_VALUE,
 );
-
-var_dump(intval(['100']));
-var_dump($parser->parse(jsonString: '{"foo": "123", "boo": "12345", "goo": {"child_goo": "2", "another_goo_child": "3", "yet_another_child_goo": ["100", ["asddsa"], 3.123, "8 (950) 288-56-23"]}}'));
+$parser->setParseScheme(scheme: new ArraySanitazer(
+    new IntegerSanitazer(),
+    7
+));
+// var_dump(json_decode('[100]'));
+var_dump($parser->parse('[1, 2, 3, 4, 5, 5, 1230]'));
+// var_dump($parser->parse(jsonString: '{"foo": "123", "boo": "12345", "goo": {"child_goo": "2", "another_goo_child": "3", "yet_another_child_goo": ["100", ["asddsa"], 3.123, "8 (950) 288-56-23"]}}'));

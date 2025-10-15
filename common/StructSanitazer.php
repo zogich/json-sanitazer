@@ -5,18 +5,22 @@ namespace common;
 use ArrayIterator;
 
 /** @implements SanitazerInterface<array> */
-final class ArraySanitazer implements SanitazerInterface
+final class StructSanitazer implements SanitazerInterface
 {
     private array $sanitazers = [];
     private SanitazerInterface $currentSanitazer;
 
-    public function __construct(SanitazerInterface $typeOfArrayValues, int $count)
+    /**
+     * @param SanitazerInterface[] $sanitazers
+     */
+    public function __construct(array $sanitazers)
     {
-        for ($i = 0; $i < $count; ++$i) {
-            $this->sanitazers[] = new $typeOfArrayValues();
-        }
+        $this->sanitazers = $sanitazers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function sanitaze(array|string|int $value): array
     {
         $result = [];
@@ -39,4 +43,3 @@ final class ArraySanitazer implements SanitazerInterface
         return $result;
     }
 }
-
