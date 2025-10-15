@@ -14,7 +14,7 @@ final class FloatSanitazer implements SanitazerInterface
         $result = filter_var($value, FILTER_VALIDATE_FLOAT);
 
         if ($result === false) {
-            throw new InvalidArgumentException("Невозможно преобразовать '{$value}' в целое число");
+            throw new InvalidArgumentException("Cant transform '{$value}' to float");
         }
 
         return floatval($value);

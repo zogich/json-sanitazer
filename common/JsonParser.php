@@ -4,7 +4,7 @@ namespace common;
 
 final class JsonParser
 {
-    private StructSanitazer|ArraySanitazer $parseScheme;
+    private SanitazerInterface $parseScheme;
 
     public function __construct()
     {
@@ -13,7 +13,7 @@ final class JsonParser
     /**
      * @param array $scheme
      */
-    public function setParseScheme(StructSanitazer|ArraySanitazer $scheme): void
+    public function setParseScheme(SanitazerInterface $scheme): void
     {
         // $this->recursiveParseScheme($scheme, $this->parseScheme);
         $this->parseScheme = $scheme;

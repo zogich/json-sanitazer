@@ -29,11 +29,14 @@ final class StructSanitazer implements SanitazerInterface
         $iterator = new ArrayIterator($this->sanitazers);
         $this->currentSanitazer = $iterator->current();
 
+        $wasErrorOccured = false;
+
         foreach ($value as $key => $elementOfValue) {
             try {
                 $result[$key] = $this->currentSanitazer->sanitaze($elementOfValue);
             } catch (Exception $e) {
                 $result[$key] = $e->getMessage();
+                $wasErrorOccured = true;
             }
 
             $iterator->next();
@@ -43,6 +46,10 @@ final class StructSanitazer implements SanitazerInterface
             }
 
             $this->currentSanitazer = $iterator->current();
+        }
+
+        if ($wasErrorOccured) {
+            throw new Exception(sprintf('An error occured when sanitaze struct: %s', json_encode($result)));
         }
 
         return $result;

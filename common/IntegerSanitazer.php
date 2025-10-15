@@ -15,13 +15,13 @@ final class IntegerSanitazer implements SanitazerInterface
     public function sanitaze(array|string|int $value): int
     {
         if (!is_scalar($value)) {
-            throw new InvalidArgumentException('Значение должно быть скалярным типом');
+            throw new InvalidArgumentException('Must be scalar');
         }
 
         $result = filter_var($value, FILTER_VALIDATE_INT);
 
         if ($result === false) {
-            throw new InvalidArgumentException("Невозможно преобразовать '{$value}' в целое число");
+            throw new InvalidArgumentException("Cant transform '{$value} to int");
         }
 
         return $result;
