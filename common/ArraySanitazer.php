@@ -3,6 +3,7 @@
 namespace common;
 
 use ArrayIterator;
+use Exception;
 
 /** @implements SanitazerInterface<array> */
 final class ArraySanitazer implements SanitazerInterface
@@ -25,7 +26,11 @@ final class ArraySanitazer implements SanitazerInterface
         $this->currentSanitazer = $iterator->current();
 
         foreach ($value as $key => $elementOfValue) {
-            $result[$key] = $this->currentSanitazer->sanitaze($elementOfValue);
+            try {
+                $result[$key] = $this->currentSanitazer->sanitaze($elementOfValue);
+            } catch (Exception $e) {
+                $result[$key] = $e->getMessage();
+            }
 
             $iterator->next();
 

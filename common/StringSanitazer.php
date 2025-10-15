@@ -13,6 +13,6 @@ final class StringSanitazer implements SanitazerInterface
             return json_encode($value);
         }
 
-        return $value;
+        return strval($value);
     }
 }

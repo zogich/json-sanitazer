@@ -42,5 +42,5 @@ $parser->setParseScheme(scheme: new ArraySanitazer(
     7
 ));
 // var_dump(json_decode('[100]'));
-var_dump($parser->parse('[1, 2, 3, 4, 5, 5, 1230]'));
+var_dump($parser->parse('[1, 2, 3, 4, "asdsdasdasdsad", 5, 1230]'));
 // var_dump($parser->parse(jsonString: '{"foo": "123", "boo": "12345", "goo": {"child_goo": "2", "another_goo_child": "3", "yet_another_child_goo": ["100", ["asddsa"], 3.123, "8 (950) 288-56-23"]}}'));
