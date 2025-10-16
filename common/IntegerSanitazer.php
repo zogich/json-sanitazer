@@ -12,7 +12,7 @@ final class IntegerSanitazer implements SanitazerInterface
     /**
      * {@inheritDoc}
      */
-    public function sanitaze(array|string|int $value): int
+    public function sanitaze(array|string|int|float $value): int
     {
         if (!is_scalar($value)) {
             throw new InvalidArgumentException('Must be scalar');
@@ -25,5 +25,10 @@ final class IntegerSanitazer implements SanitazerInterface
         }
 
         return $result;
+    }
+
+    public function clone(): IntegerSanitazer
+    {
+        return new IntegerSanitazer();
     }
 }

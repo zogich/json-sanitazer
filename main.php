@@ -2,6 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
+use common\ArraySanitazer;
 use common\FloatSanitazer;
 use common\IntegerSanitazer;
 use common\JsonParser;
@@ -13,7 +14,7 @@ $parser = new JsonParser();
 $parser->setParseScheme(
     scheme: new StructSanitazer(
         [
-          new IntegerSanitazer(),
+          new ArraySanitazer(new StructSanitazer([new IntegerSanitazer()]), 2),
           new IntegerSanitazer(),
           new StructSanitazer(
               [
@@ -37,4 +38,16 @@ $parser->setParseScheme(
     // 'array_value' => SupportedTypes::ARRAY_VALUE,
 );
 
-var_dump($parser->parse(jsonString: '{"foo": "123", "boo": "12sd345", "goo": {"child_goo": "1123", "another_goo_child": "3", "yet_another_child_goo": ["100", ["asddsa"], "3.1sda23", "8 (950) 288-56-23"]}}'));
+var_dump($parser->parse(jsonString: '{
+  "foo": [{"testclone": 3}, {"testclone2": 4}],
+  "boo": "12345",
+  "goo": 
+    {
+      "child_goo": "1123",
+      "another_goo_child": "3", 
+      "yet_another_child_goo": 
+          [
+              "100", ["asddsa"], "3.123", "8 (950) 288-56-23"
+          ]
+    }
+  }'));

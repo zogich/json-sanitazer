@@ -19,10 +19,15 @@ final class StructSanitazer implements SanitazerInterface
         $this->sanitazers = $sanitazers;
     }
 
+    public function clone(): StructSanitazer
+    {
+        return new StructSanitazer($this->sanitazers);
+    }
+
     /**
      * {@inheritDoc}
      */
-    public function sanitaze(array|string|int $value): array
+    public function sanitaze(array|string|int|float $value): array
     {
         $result = [];
 

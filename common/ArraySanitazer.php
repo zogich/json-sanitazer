@@ -14,11 +14,16 @@ final class ArraySanitazer implements SanitazerInterface
     public function __construct(SanitazerInterface $typeOfArrayValues, int $count)
     {
         for ($i = 0; $i < $count; ++$i) {
-            $this->sanitazers[] = new $typeOfArrayValues();
+            $this->sanitazers[] = $typeOfArrayValues->clone();
         }
     }
 
-    public function sanitaze(array|string|int $value): array
+    public function clone(): ArraySanitazer
+    {
+        return new ArraySanitazer(new $this->sanitazers[0](), count($this->sanitazers));
+    }
+
+    public function sanitaze(array|string|int|float $value): array
     {
         $result = [];
 
@@ -37,6 +42,7 @@ final class ArraySanitazer implements SanitazerInterface
                 $result[$key] = $e->getMessage();
                 $wasErrorsOccuredInSanitazeLoop = true;
             }
+            // ToDo подумать как лучше - чтобы массивы и структуры бросали исключение или нет. Дальше пишем тесты.
 
             $iterator->next();
 
@@ -54,4 +60,3 @@ final class ArraySanitazer implements SanitazerInterface
         return $result;
     }
 }
-

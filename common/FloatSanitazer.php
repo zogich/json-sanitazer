@@ -9,7 +9,7 @@ use InvalidArgumentException;
 /** @implements SanitazerInterface<float> */
 final class FloatSanitazer implements SanitazerInterface
 {
-    public function sanitaze(array|string|int $value): float
+    public function sanitaze(array|string|int|float $value): float
     {
         $result = filter_var($value, FILTER_VALIDATE_FLOAT);
 
@@ -17,6 +17,11 @@ final class FloatSanitazer implements SanitazerInterface
             throw new InvalidArgumentException("Cant transform '{$value}' to float");
         }
 
-        return floatval($value);
+        return $result;
+    }
+
+    public function clone(): FloatSanitazer
+    {
+        return new FloatSanitazer();
     }
 }

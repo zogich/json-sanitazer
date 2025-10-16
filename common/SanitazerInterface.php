@@ -12,5 +12,7 @@ interface SanitazerInterface
      *
      * @return T
      */
-    public function sanitaze(string|array|int $value): string|int|array|float;
+    public function sanitaze(string|array|int|float $value): string|int|array|float;
+
+    public function clone(): SanitazerInterface;
 }
