@@ -14,7 +14,7 @@ $parser = new JsonParser();
 $parser->setParseScheme(
     scheme: new StructSanitazer(
         [
-          new ArraySanitazer(new StructSanitazer([new IntegerSanitazer()]), 2),
+          new ArraySanitazer(new StructSanitazer([new IntegerSanitazer()])),
           new IntegerSanitazer(),
           new StructSanitazer(
               [

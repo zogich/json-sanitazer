@@ -2,20 +2,16 @@
 
 namespace common;
 
-use ArrayIterator;
 use Exception;
 
 /** @implements SanitazerInterface<array> */
 final class ArraySanitazer implements SanitazerInterface
 {
-    private array $sanitazers = [];
-    private SanitazerInterface $currentSanitazer;
+    private SanitazerInterface $sanitazerOfArrayElements;
 
-    public function __construct(SanitazerInterface $typeOfArrayValues, int $count)
+    public function __construct(SanitazerInterface $typeOfArrayValues)
     {
-        for ($i = 0; $i < $count; ++$i) {
-            $this->sanitazers[] = $typeOfArrayValues->clone();
-        }
+        $this->sanitazerOfArrayElements = $typeOfArrayValues;
     }
 
     public function clone(): ArraySanitazer
@@ -27,14 +23,11 @@ final class ArraySanitazer implements SanitazerInterface
     {
         $result = [];
 
-        $iterator = new ArrayIterator($this->sanitazers);
-        $this->currentSanitazer = $iterator->current();
-
         $wasErrorsOccuredInSanitazeLoop = false;
 
         foreach ($value as $key => $elementOfValue) {
             try {
-                $result[$key] = $this->currentSanitazer->sanitaze($elementOfValue);
+                $result[$key] = $this->sanitazerOfArrayElements->sanitaze($elementOfValue);
             } catch (Exception $e) {
                 // оставляем санитайзеру верхнего увррованя заполнять ошибки, так как сами санитайзеры должны завершаться либо успешно, либо
                 // выбрасывать исключение - будем перехватывать внутри санитайзеров, не увидим ошибки, то есть мы предоставляем верхнему уровню обработать ошибки
@@ -43,14 +36,6 @@ final class ArraySanitazer implements SanitazerInterface
                 $wasErrorsOccuredInSanitazeLoop = true;
             }
             // ToDo подумать как лучше - чтобы массивы и структуры бросали исключение или нет. Дальше пишем тесты.
-
-            $iterator->next();
-
-            if (!$iterator->valid()) {
-                break;
-            }
-
-            $this->currentSanitazer = $iterator->current();
         }
 
         if ($wasErrorsOccuredInSanitazeLoop) {

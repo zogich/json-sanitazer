@@ -11,6 +11,7 @@ use common\IntegerSanitazer;
 use common\JsonParser;
 use common\PhoneSanitazer;
 use common\StringSanitazer;
+use common\StructSanitazer;
 use Exception;
 
 class JsonParserTest extends Unit
@@ -20,6 +21,8 @@ class JsonParserTest extends Unit
     private const string TEST_INT_VARIABLE_NAME = 'test_int_variable';
     private const int TEST_INT_VALUE = 11111111;
     private const float TEST_FLOAT_VALUE = 10.101;
+    private const string TEST_FLOAT_VARIABLE_NAME = 'test_float_variable';
+    private const string FIRST_TEST_PHONE_VARIABLE_NAME = 'first_test_phone_variable';
     private const string FIRST_TEST_PHONE_VALUE = '8 (950) 288-56-23';
     private const string SANITAZED_FIRST_PHONE_VALUE = '79502885623';
     private const string INVALID_NUMERIC_VALUE = '123fff11';
@@ -97,11 +100,11 @@ class JsonParserTest extends Unit
             scheme: new PhoneSanitazer()
         );
 
-        $expectedValue = '79502885623';
+        $expectedValue = self::SANITAZED_FIRST_PHONE_VALUE;
 
         $result = $this->sut->parse(json_encode(self::FIRST_TEST_PHONE_VALUE));
 
-        $this->assertEquals($expectedValue, $result);
+        $this->assertEquals($expectedValue, $result, 'Json содержащий номер телефона неправильно преобразованы');
     }
 
     public function testPhoneSanitazerGetWrongValue(): void
@@ -118,8 +121,81 @@ class JsonParserTest extends Unit
     public function testSanitazeArrayOfInteger(): void
     {
         $this->sut->setParseScheme(
-            scheme: new ArraySanitazer()
+            scheme: new ArraySanitazer(new IntegerSanitazer())
         );
+
+        $expectedValue = [
+          1, 2, 3, 4, 5,
+        ];
+
+        $result = $this->sut->parse(json_encode($expectedValue));
+
+        $this->assertEquals($expectedValue, $result);
+    }
+
+    public function testSanitazeStruct(): void
+    {
+        $this->sut->setParseScheme(
+            scheme: new StructSanitazer(
+                [
+                  new IntegerSanitazer(),
+                  new StringSanitazer(),
+                  new FloatSanitazer(),
+                  new PhoneSanitazer(),
+                ]
+            )
+        );
+
+        $valueForSanitazing = [
+          self::TEST_INT_VARIABLE_NAME => self::TEST_INT_VALUE,
+          self::TEST_STRING_VARIABLE_NAME => self::TEST_STRING_VALUE,
+          self::TEST_FLOAT_VARIABLE_NAME => self::TEST_FLOAT_VALUE,
+          self::FIRST_TEST_PHONE_VARIABLE_NAME => self::FIRST_TEST_PHONE_VALUE,
+        ];
+
+        $expectedValue = $valueForSanitazing;
+        $expectedValue[self::FIRST_TEST_PHONE_VARIABLE_NAME] = self::SANITAZED_FIRST_PHONE_VALUE;
+
+        $result = $this->sut->parse(json_encode($valueForSanitazing));
+
+        $this->assertEquals($expectedValue, $result, 'Json содержащий структуру неправильно преобразован');
+    }
+
+    public function testSanitazeArrayOfStructures(): void
+    {
+        $this->sut->setParseScheme(new ArraySanitazer(
+            new StructSanitazer(
+                [
+                  new IntegerSanitazer(),
+                  new StringSanitazer(),
+                  new FloatSanitazer(),
+                  new PhoneSanitazer(),
+                ]
+            )
+        ));
+
+        $valueForSanitazing = [
+          0 => [
+              self::TEST_INT_VARIABLE_NAME => self::TEST_INT_VALUE,
+              self::TEST_STRING_VARIABLE_NAME => self::TEST_STRING_VALUE,
+              self::TEST_FLOAT_VARIABLE_NAME => self::TEST_FLOAT_VALUE,
+              self::FIRST_TEST_PHONE_VARIABLE_NAME => self::FIRST_TEST_PHONE_VALUE,
+          ],
+          1 => [
+              self::TEST_INT_VARIABLE_NAME => self::TEST_INT_VALUE,
+              self::TEST_STRING_VARIABLE_NAME => self::TEST_STRING_VALUE,
+              self::TEST_FLOAT_VARIABLE_NAME => self::TEST_FLOAT_VALUE,
+              self::FIRST_TEST_PHONE_VARIABLE_NAME => self::FIRST_TEST_PHONE_VALUE,
+          ],
+        ];
+
+        $expectedValue = $valueForSanitazing;
+        $expectedValue[0][self::FIRST_TEST_PHONE_VARIABLE_NAME] = self::SANITAZED_FIRST_PHONE_VALUE;
+        $expectedValue[1][self::FIRST_TEST_PHONE_VARIABLE_NAME] = self::SANITAZED_FIRST_PHONE_VALUE;
+
+        $result = $this->sut->parse(json_encode($valueForSanitazing));
+
+        $this->assertEquals($expectedValue, $result);
     }
 
     protected function _before(): void

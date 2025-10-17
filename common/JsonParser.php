@@ -22,7 +22,6 @@ final class JsonParser
     public function parse(string $jsonString): array|string|int|float
     {
         $preparedForSanitatingJson = json_decode($jsonString, associative: true);
-        var_dump($preparedForSanitatingJson);
 
         return $this->parseScheme->sanitaze($preparedForSanitatingJson);
     }
