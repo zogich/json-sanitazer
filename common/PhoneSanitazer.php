@@ -12,7 +12,7 @@ final class PhoneSanitazer implements SanitazerInterface
     public function sanitaze(string|array|int|float $value): string
     {
         if (!$this->isValidFormat($value)) {
-            throw new InvalidArgumentException('Номер телефона указан в некорректном формате');
+            throw new InvalidArgumentException(sprintf('%s - Wrong phone number format', $value));
         }
         $phoneWithOnlyNumbers = preg_replace('/\D/', '', $value);
 

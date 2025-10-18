@@ -133,6 +133,26 @@ class JsonParserTest extends Unit
         $this->assertEquals($expectedValue, $result);
     }
 
+    public function testArraySanitazerGetWrongValue(): void
+    {
+        $this->sut->setParseScheme(new ArraySanitazer(new IntegerSanitazer()));
+
+        $this->expectException(Exception::class);
+
+        $this->sut->parse(json_encode(self::TEST_FLOAT_VALUE));
+    }
+
+    public function testArraySanitazerGetWrongValueInsideArray(): void
+    {
+        $this->sut->setParseScheme(new ArraySanitazer(new PhoneSanitazer()));
+
+        $valueWithWrongPhone = [self::FIRST_TEST_PHONE_VALUE, '123321'];
+
+        $this->expectException(Exception::class);
+
+        $this->sut->parse(json_encode($valueWithWrongPhone));
+    }
+
     public function testSanitazeStruct(): void
     {
         $this->sut->setParseScheme(
@@ -159,6 +179,36 @@ class JsonParserTest extends Unit
         $result = $this->sut->parse(json_encode($valueForSanitazing));
 
         $this->assertEquals($expectedValue, $result, 'Json содержащий структуру неправильно преобразован');
+    }
+
+    public function testStructSanitazerGetWrongValue(): void
+    {
+        $this->sut->setParseScheme(new StructSanitazer([new IntegerSanitazer()]));
+
+        $this->expectException(Exception::class);
+
+        $this->sut->parse(json_encode(self::TEST_FLOAT_VALUE));
+    }
+
+    public function testStructureSanitazerGetWrongValueInsideOfStructure(): void
+    {
+        $this->sut->setParseScheme(
+            new StructSanitazer(
+                [
+                  new IntegerSanitazer(),
+                  new FloatSanitazer(),
+                ]
+            )
+        );
+
+        $structWithWrongFLoat = [
+          self::TEST_INT_VARIABLE_NAME => self::TEST_INT_VALUE,
+          self::TEST_FLOAT_VARIABLE_NAME => 'wrong_float',
+        ];
+
+        $this->expectException(Exception::class);
+
+        $this->sut->parse(json_encode($structWithWrongFLoat));
     }
 
     public function testSanitazeArrayOfStructures(): void
