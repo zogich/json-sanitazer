@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace common;
 
 use Exception;
@@ -29,9 +31,6 @@ final class ArraySanitazer implements SanitazerInterface
             try {
                 $result[$key] = $this->sanitazerOfArrayElements->sanitaze($elementOfValue);
             } catch (Exception $e) {
-                // оставляем санитайзеру верхнего увррованя заполнять ошибки, так как сами санитайзеры должны завершаться либо успешно, либо
-                // выбрасывать исключение - будем перехватывать внутри санитайзеров, не увидим ошибки, то есть мы предоставляем верхнему уровню обработать ошибки
-                // В данном случае - верхний уровень - санитайзер массивов/структур, и мы на этом уровне выбираем, как реагировать на ошибку санитайзера.
                 $result[$key] = $e->getMessage();
                 $wasErrorsOccuredInSanitazeLoop = true;
             }

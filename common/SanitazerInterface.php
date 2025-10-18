@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace common;
 
 /**
- * @template T of string|int|array
+ * @template T of string|int|array|float
  */
 interface SanitazerInterface
 {

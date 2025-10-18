@@ -32,10 +32,6 @@ $parser->setParseScheme(
           ),
         ]
     )
-    // 'integer_value' => SupportedTypes::INTEGER_VALUE,
-    // 'another_int_value' => SupportedTypes::INTEGER_VALUE,
-    // 'yet_another_int_value' => SupportedTypes::INTEGER_VALUE,
-    // 'array_value' => SupportedTypes::ARRAY_VALUE,
 );
 
 var_dump($parser->parse(jsonString: '{

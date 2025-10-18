@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace common;
 
 final class JsonParser
@@ -15,7 +17,6 @@ final class JsonParser
      */
     public function setParseScheme(SanitazerInterface $scheme): void
     {
-        // $this->recursiveParseScheme($scheme, $this->parseScheme);
         $this->parseScheme = $scheme;
     }
 
@@ -25,24 +26,4 @@ final class JsonParser
 
         return $this->parseScheme->sanitaze($preparedForSanitatingJson);
     }
-
-    // private function recursiveParseScheme(array $scheme, CompositeInterface $parseScheme): void
-    // {
-    //     foreach ($scheme as $element) {
-    //         switch ($element) {
-    //             case SupportedTypes::INTEGER_VALUE:
-    //                 $parseScheme->addChild(new IntegerSanitazer());
-    //
-    //                 break;
-    //             case SupportedTypes::ARRAY_VALUE:
-    //                 $sanitazer = new ArraySanitazer();
-    //                 $parseScheme->addChild($sanitazer);
-    //
-    //                 $this->recursiveParseScheme($element, $sanitazer);
-    //
-    //                 break;
-    //         }
-    //     }
-    //
-    // }
 }
