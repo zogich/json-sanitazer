@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace common;
+namespace src\implementations;
+
+use src\interfaces\sanitizers\SanitazerInterface;
 
 final class JsonParser
 {

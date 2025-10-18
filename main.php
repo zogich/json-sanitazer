@@ -2,13 +2,13 @@
 
 require_once 'vendor/autoload.php';
 
-use common\ArraySanitazer;
-use common\FloatSanitazer;
-use common\IntegerSanitazer;
-use common\JsonParser;
-use common\PhoneSanitazer;
-use common\StringSanitazer;
-use common\StructSanitazer;
+use src\implementations\sanitizers\ArraySanitazer;
+use src\implementations\sanitizers\FloatSanitazer;
+use src\implementations\sanitizers\IntegerSanitazer;
+use src\implementations\JsonParser;
+use src\implementations\sanitizers\PhoneSanitazer;
+use src\implementations\sanitizers\StringSanitazer;
+use src\implementations\sanitizers\StructSanitazer;
 
 $parser = new JsonParser();
 $parser->setParseScheme(

@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-4": {
-            "common\\": "common/"
+            "src\\": "src/"
         }
     },
     "require-dev": {

@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace common;
+namespace src\implementations\sanitizers;
 
 use Psr\Log\InvalidArgumentException;
+use src\implementations\sanitizers\PhoneSanitazer;
+use src\interfaces\sanitizers\SanitazerInterface;
 
 /** @implements SanitazerInterface<string> */
 final class PhoneSanitazer implements SanitazerInterface

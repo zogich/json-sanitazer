@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace common;
+namespace src\implementations\sanitizers;
 
 use InvalidArgumentException;
+use src\implementations\sanitizers\IntegerSanitazer;
+use src\interfaces\sanitizers\SanitazerInterface;
 
 /**
  * @implements SanitizerInterface<int>

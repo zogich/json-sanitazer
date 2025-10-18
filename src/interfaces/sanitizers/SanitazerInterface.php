@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace common;
+namespace src\interfaces\sanitizers;
 
 /**
  * @template T of string|int|array|float

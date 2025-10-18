@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-namespace common;
+namespace src\implementations\sanitizers;
+
+use src\implementations\sanitizers\StringSanitazer;
+use src\interfaces\sanitizers\SanitazerInterface;
 
 /** @implements SanitazerInterface<string> */
 final class StringSanitazer implements SanitazerInterface

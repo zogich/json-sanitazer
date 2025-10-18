@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace common;
+namespace src\implementations\sanitizers;
 
 use Exception;
+use src\interfaces\sanitizers\SanitazerInterface;
 
 /** @implements SanitazerInterface<array> */
 final class ArraySanitazer implements SanitazerInterface
