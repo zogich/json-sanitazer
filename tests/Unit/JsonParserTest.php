@@ -198,6 +198,31 @@ class JsonParserTest extends Unit
         $this->assertEquals($expectedValue, $result);
     }
 
+    public function testSanitazeStructOfArrays(): void
+    {
+        $this->sut->setParseScheme(
+            new StructSanitazer(
+                [
+                  new ArraySanitazer(new IntegerSanitazer()),
+                  new ArraySanitazer(new StringSanitazer()),
+                ]
+            )
+        );
+
+        $expectedValue = [
+          'dummy_key' => [
+            1, 2, 3, 4, 5,
+          ],
+          'yet_one_dummy_key' => [
+            'aaa', 'bbb', 'ccc',
+          ],
+        ];
+
+        $result = $this->sut->parse(json_encode($expectedValue));
+
+        $this->assertEquals($expectedValue, $result);
+    }
+
     protected function _before(): void
     {
         $this->sut = new JsonParser();
