@@ -41,7 +41,11 @@ $parser->setParseScheme(
 );
 
 $result = $parser->parse(jsonString: '{
-  "foo": [{"testclone": 3}, {"testclone2": 4}],
+  "foo": 
+    [
+      {"testclone": 3}, 
+      {"testclone2": 4}
+    ],
   "boo": "12345",
   "goo": 
     {

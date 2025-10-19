@@ -1,6 +1,6 @@
 # json-sanitazer
 
-Usage:
+## Usage:
 
 ```
 <?php
@@ -46,7 +46,11 @@ $parser->setParseScheme(
 );
 
 $result = $parser->parse(jsonString: '{
-  "foo": [{"testclone": 3}, {"testclone2": 4}],
+  "foo": 
+    [
+      {"testclone": 3}, 
+      {"testclone2": 4}
+    ],
   "boo": "12345",
   "goo": 
     {
@@ -59,10 +63,9 @@ $result = $parser->parse(jsonString: '{
     }
   }');
 
-var_dump($result);
-```
+var_dump($result);```
 
-tests: 
+## tests: 
 
 ```
 php vendor/bin/codecept build
