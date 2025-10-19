@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace src\implementations\sanitizers;
 
 use InvalidArgumentException;
-use src\implementations\sanitizers\FloatSanitazer;
-use src\interfaces\sanitizers\SanitazerInterface;
+use src\interfaces\sanitizers\SanitizerInterface;
 
 /** @implements SanitazerInterface<float> */
-final class FloatSanitazer implements SanitazerInterface
+final class FloatSanitizer implements SanitizerInterface
 {
     public function sanitaze(array|string|int|float $value): float
     {
@@ -22,8 +21,8 @@ final class FloatSanitazer implements SanitazerInterface
         return $result;
     }
 
-    public function clone(): FloatSanitazer
+    public function clone(): FloatSanitizer
     {
-        return new FloatSanitazer();
+        return new FloatSanitizer();
     }
 }

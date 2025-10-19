@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace src\implementations\sanitizers;
 
 use Psr\Log\InvalidArgumentException;
-use src\implementations\sanitizers\PhoneSanitazer;
-use src\interfaces\sanitizers\SanitazerInterface;
+use src\interfaces\sanitizers\SanitizerInterface;
 
 /** @implements SanitazerInterface<string> */
-final class PhoneSanitazer implements SanitazerInterface
+final class PhoneSanitizer implements SanitizerInterface
 {
     public function sanitaze(string|array|int|float $value): string
     {
@@ -25,9 +24,9 @@ final class PhoneSanitazer implements SanitazerInterface
         return '7' . substr($phoneWithOnlyNumbers, 1);
     }
 
-    public function clone(): PhoneSanitazer
+    public function clone(): PhoneSanitizer
     {
-        return new PhoneSanitazer();
+        return new PhoneSanitizer();
     }
 
     private function isValidFormat(string $value): bool

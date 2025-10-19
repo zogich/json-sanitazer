@@ -6,13 +6,13 @@ namespace src\implementations\sanitizers;
 
 use ArrayIterator;
 use Exception;
-use src\interfaces\sanitizers\SanitazerInterface;
+use src\interfaces\sanitizers\SanitizerInterface;
 
 /** @implements SanitazerInterface<array> */
-final class StructSanitazer implements SanitazerInterface
+final class StructSanitizer implements SanitizerInterface
 {
     private array $sanitazers = [];
-    private SanitazerInterface $currentSanitazer;
+    private SanitizerInterface $currentSanitazer;
 
     /**
      * @param SanitazerInterface[] $sanitazers
@@ -22,9 +22,9 @@ final class StructSanitazer implements SanitazerInterface
         $this->sanitazers = $sanitazers;
     }
 
-    public function clone(): StructSanitazer
+    public function clone(): StructSanitizer
     {
-        return new StructSanitazer($this->sanitazers);
+        return new StructSanitizer($this->sanitazers);
     }
 
     /**

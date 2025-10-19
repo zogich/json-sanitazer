@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace src\implementations\sanitizers;
 
 use InvalidArgumentException;
-use src\implementations\sanitizers\IntegerSanitazer;
-use src\interfaces\sanitizers\SanitazerInterface;
+use src\interfaces\sanitizers\SanitizerInterface;
 
 /**
  * @implements SanitizerInterface<int>
  */
-final class IntegerSanitazer implements SanitazerInterface
+final class IntegerSanitizer implements SanitizerInterface
 {
     /**
      * {@inheritDoc}
@@ -31,8 +30,8 @@ final class IntegerSanitazer implements SanitazerInterface
         return $result;
     }
 
-    public function clone(): IntegerSanitazer
+    public function clone(): IntegerSanitizer
     {
-        return new IntegerSanitazer();
+        return new IntegerSanitizer();
     }
 }

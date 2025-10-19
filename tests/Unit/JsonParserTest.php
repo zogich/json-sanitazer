@@ -2,17 +2,15 @@
 
 namespace Tests\Unit;
 
-require_once 'vendor/autoload.php';
-
 use Codeception\Test\Unit;
-use src\implementations\sanitizers\ArraySanitazer;
-use src\implementations\sanitizers\FloatSanitazer;
-use src\implementations\sanitizers\IntegerSanitazer;
-use src\implementations\JsonParser;
-use src\implementations\sanitizers\PhoneSanitazer;
-use src\implementations\sanitizers\StringSanitazer;
-use src\implementations\sanitizers\StructSanitazer;
 use Exception;
+use src\implementations\JsonParser;
+use src\implementations\sanitizers\ArraySanitizer;
+use src\implementations\sanitizers\FloatSanitizer;
+use src\implementations\sanitizers\IntegerSanitizer;
+use src\implementations\sanitizers\PhoneSanitizer;
+use src\implementations\sanitizers\StringSanitizer;
+use src\implementations\sanitizers\StructSanitizer;
 
 class JsonParserTest extends Unit
 {
@@ -32,7 +30,7 @@ class JsonParserTest extends Unit
     public function testSanitazeString(): void
     {
         $this->sut->setParseScheme(
-            new StringSanitazer(),
+            new StringSanitizer(),
         );
 
         $expectedValue = self::TEST_STRING_VALUE;
@@ -49,7 +47,7 @@ class JsonParserTest extends Unit
     public function testSanitazeInt(): void
     {
         $this->sut->setParseScheme(
-            new IntegerSanitazer(),
+            new IntegerSanitizer(),
         );
 
         $expectedValue = self::TEST_INT_VALUE;
@@ -62,7 +60,7 @@ class JsonParserTest extends Unit
     public function testIntSanitazerGetWrongValue(): void
     {
         $this->sut->setParseScheme(
-            new IntegerSanitazer()
+            new IntegerSanitizer()
         );
 
         $this->expectException(Exception::class);
@@ -73,7 +71,7 @@ class JsonParserTest extends Unit
     public function testSanitazeFloat(): void
     {
         $this->sut->setParseScheme(
-            scheme: new FloatSanitazer()
+            scheme: new FloatSanitizer()
         );
 
         $expectedValue = self::TEST_FLOAT_VALUE;
@@ -86,7 +84,7 @@ class JsonParserTest extends Unit
     public function testFloatSanitazerGetWrongWalue(): void
     {
         $this->sut->setParseScheme(
-            scheme: new FloatSanitazer()
+            scheme: new FloatSanitizer()
         );
 
         $this->expectException(Exception::class);
@@ -97,7 +95,7 @@ class JsonParserTest extends Unit
     public function testSanitazePhone(): void
     {
         $this->sut->setParseScheme(
-            scheme: new PhoneSanitazer()
+            scheme: new PhoneSanitizer()
         );
 
         $expectedValue = self::SANITAZED_FIRST_PHONE_VALUE;
@@ -110,7 +108,7 @@ class JsonParserTest extends Unit
     public function testPhoneSanitazerGetWrongValue(): void
     {
         $this->sut->setParseScheme(
-            scheme: new PhoneSanitazer()
+            scheme: new PhoneSanitizer()
         );
 
         $this->expectException(Exception::class);
@@ -121,7 +119,7 @@ class JsonParserTest extends Unit
     public function testSanitazeArrayOfInteger(): void
     {
         $this->sut->setParseScheme(
-            scheme: new ArraySanitazer(new IntegerSanitazer())
+            scheme: new ArraySanitizer(new IntegerSanitizer())
         );
 
         $expectedValue = [
@@ -135,7 +133,7 @@ class JsonParserTest extends Unit
 
     public function testArraySanitazerGetWrongValue(): void
     {
-        $this->sut->setParseScheme(new ArraySanitazer(new IntegerSanitazer()));
+        $this->sut->setParseScheme(new ArraySanitizer(new IntegerSanitizer()));
 
         $this->expectException(Exception::class);
 
@@ -144,7 +142,7 @@ class JsonParserTest extends Unit
 
     public function testArraySanitazerGetWrongValueInsideArray(): void
     {
-        $this->sut->setParseScheme(new ArraySanitazer(new PhoneSanitazer()));
+        $this->sut->setParseScheme(new ArraySanitizer(new PhoneSanitizer()));
 
         $valueWithWrongPhone = [self::FIRST_TEST_PHONE_VALUE, '123321'];
 
@@ -156,12 +154,12 @@ class JsonParserTest extends Unit
     public function testSanitazeStruct(): void
     {
         $this->sut->setParseScheme(
-            scheme: new StructSanitazer(
+            scheme: new StructSanitizer(
                 [
-                  new IntegerSanitazer(),
-                  new StringSanitazer(),
-                  new FloatSanitazer(),
-                  new PhoneSanitazer(),
+                  new IntegerSanitizer(),
+                  new StringSanitizer(),
+                  new FloatSanitizer(),
+                  new PhoneSanitizer(),
                 ]
             )
         );
@@ -183,7 +181,7 @@ class JsonParserTest extends Unit
 
     public function testStructSanitazerGetWrongValue(): void
     {
-        $this->sut->setParseScheme(new StructSanitazer([new IntegerSanitazer()]));
+        $this->sut->setParseScheme(new StructSanitizer([new IntegerSanitizer()]));
 
         $this->expectException(Exception::class);
 
@@ -193,10 +191,10 @@ class JsonParserTest extends Unit
     public function testStructureSanitazerGetWrongValueInsideOfStructure(): void
     {
         $this->sut->setParseScheme(
-            new StructSanitazer(
+            new StructSanitizer(
                 [
-                  new IntegerSanitazer(),
-                  new FloatSanitazer(),
+                  new IntegerSanitizer(),
+                  new FloatSanitizer(),
                 ]
             )
         );
@@ -213,13 +211,13 @@ class JsonParserTest extends Unit
 
     public function testSanitazeArrayOfStructures(): void
     {
-        $this->sut->setParseScheme(new ArraySanitazer(
-            new StructSanitazer(
+        $this->sut->setParseScheme(new ArraySanitizer(
+            new StructSanitizer(
                 [
-                  new IntegerSanitazer(),
-                  new StringSanitazer(),
-                  new FloatSanitazer(),
-                  new PhoneSanitazer(),
+                  new IntegerSanitizer(),
+                  new StringSanitizer(),
+                  new FloatSanitizer(),
+                  new PhoneSanitizer(),
                 ]
             )
         ));
@@ -251,10 +249,10 @@ class JsonParserTest extends Unit
     public function testSanitazeStructOfArrays(): void
     {
         $this->sut->setParseScheme(
-            new StructSanitazer(
+            new StructSanitizer(
                 [
-                  new ArraySanitazer(new IntegerSanitazer()),
-                  new ArraySanitazer(new StringSanitazer()),
+                  new ArraySanitizer(new IntegerSanitizer()),
+                  new ArraySanitizer(new StringSanitizer()),
                 ]
             )
         );

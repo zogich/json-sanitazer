@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace src\implementations\sanitizers;
 
-use src\implementations\sanitizers\StringSanitazer;
-use src\interfaces\sanitizers\SanitazerInterface;
+use src\interfaces\sanitizers\SanitizerInterface;
 
 /** @implements SanitazerInterface<string> */
-final class StringSanitazer implements SanitazerInterface
+final class StringSanitizer implements SanitizerInterface
 {
     public function sanitaze(array|string|int|float $value): string
     {
@@ -19,8 +18,8 @@ final class StringSanitazer implements SanitazerInterface
         return strval($value);
     }
 
-    public function clone(): StringSanitazer
+    public function clone(): StringSanitizer
     {
-        return new StringSanitazer();
+        return new StringSanitizer();
     }
 }

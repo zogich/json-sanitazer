@@ -2,30 +2,30 @@
 
 require_once 'vendor/autoload.php';
 
-use src\implementations\sanitizers\ArraySanitazer;
-use src\implementations\sanitizers\FloatSanitazer;
-use src\implementations\sanitizers\IntegerSanitazer;
 use src\implementations\JsonParser;
-use src\implementations\sanitizers\PhoneSanitazer;
-use src\implementations\sanitizers\StringSanitazer;
-use src\implementations\sanitizers\StructSanitazer;
+use src\implementations\sanitizers\ArraySanitizer;
+use src\implementations\sanitizers\FloatSanitizer;
+use src\implementations\sanitizers\IntegerSanitizer;
+use src\implementations\sanitizers\PhoneSanitizer;
+use src\implementations\sanitizers\StringSanitizer;
+use src\implementations\sanitizers\StructSanitizer;
 
 $parser = new JsonParser();
 $parser->setParseScheme(
-    scheme: new StructSanitazer(
+    scheme: new StructSanitizer(
         [
-          new ArraySanitazer(new StructSanitazer([new IntegerSanitazer()])),
-          new IntegerSanitazer(),
-          new StructSanitazer(
+          new ArraySanitizer(new StructSanitizer([new IntegerSanitizer()])),
+          new IntegerSanitizer(),
+          new StructSanitizer(
               [
-                new IntegerSanitazer(),
-                new IntegerSanitazer(),
-                new StructSanitazer(
+                new IntegerSanitizer(),
+                new IntegerSanitizer(),
+                new StructSanitizer(
                     [
-                      new IntegerSanitazer(),
-                      new StringSanitazer(),
-                      new FloatSanitazer(),
-                      new PhoneSanitazer(),
+                      new IntegerSanitizer(),
+                      new StringSanitizer(),
+                      new FloatSanitizer(),
+                      new PhoneSanitizer(),
                     ]
                 ),
               ]
@@ -43,7 +43,7 @@ var_dump($parser->parse(jsonString: '{
       "another_goo_child": "3", 
       "yet_another_child_goo": 
           [
-              "100", ["asddsa"], "3.123", "8 (950) 288-56-23"
+              "100", ["asddsa"], "3.123", "8 (950) asd288-56-23"
           ]
     }
   }'));

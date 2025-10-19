@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace src\implementations;
 
-use src\interfaces\sanitizers\SanitazerInterface;
+use src\interfaces\sanitizers\SanitizerInterface;
 
 final class JsonParser
 {
-    private SanitazerInterface $parseScheme;
+    private SanitizerInterface $parseScheme;
 
     public function __construct()
     {
@@ -17,7 +17,7 @@ final class JsonParser
     /**
      * @param array $scheme
      */
-    public function setParseScheme(SanitazerInterface $scheme): void
+    public function setParseScheme(SanitizerInterface $scheme): void
     {
         $this->parseScheme = $scheme;
     }

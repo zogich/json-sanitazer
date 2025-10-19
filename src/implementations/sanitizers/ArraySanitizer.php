@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace src\implementations\sanitizers;
 
 use Exception;
-use src\interfaces\sanitizers\SanitazerInterface;
+use src\interfaces\sanitizers\SanitizerInterface;
 
 /** @implements SanitazerInterface<array> */
-final class ArraySanitazer implements SanitazerInterface
+final class ArraySanitizer implements SanitizerInterface
 {
-    private SanitazerInterface $sanitazerOfArrayElements;
+    private SanitizerInterface $sanitazerOfArrayElements;
 
-    public function __construct(SanitazerInterface $typeOfArrayValues)
+    public function __construct(SanitizerInterface $typeOfArrayValues)
     {
         $this->sanitazerOfArrayElements = $typeOfArrayValues;
     }
 
-    public function clone(): ArraySanitazer
+    public function clone(): ArraySanitizer
     {
-        return new ArraySanitazer(new $this->sanitazers[0](), count($this->sanitazers));
+        return new ArraySanitizer(new $this->sanitazers[0](), count($this->sanitazers));
     }
 
     public function sanitaze(array|string|int|float $value): array

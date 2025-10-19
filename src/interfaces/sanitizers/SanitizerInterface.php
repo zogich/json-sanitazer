@@ -7,7 +7,7 @@ namespace src\interfaces\sanitizers;
 /**
  * @template T of string|int|array|float
  */
-interface SanitazerInterface
+interface SanitizerInterface
 {
     /**
      * @param T $value
@@ -16,5 +16,5 @@ interface SanitazerInterface
      */
     public function sanitaze(string|array|int|float $value): string|int|array|float;
 
-    public function clone(): SanitazerInterface;
+    public function clone(): SanitizerInterface;
 }
