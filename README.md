@@ -63,7 +63,8 @@ $result = $parser->parse(jsonString: '{
     }
   }');
 
-var_dump($result);```
+var_dump($result);
+```
 
 ## tests: 
 
