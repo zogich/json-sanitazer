@@ -1,4 +1,4 @@
-# json-sanitazer
+# json-sanitizer
 
 ## Usage:
 
